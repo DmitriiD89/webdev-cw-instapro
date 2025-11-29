@@ -4,6 +4,25 @@ const personalKey = "prod";
 const baseHost = "https://webdev-hw-api.vercel.app";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
+export async function addNewPost({token, description, imageUrl}){
+  return fetch(postsHost,{
+    method: "POST",
+    headers:{
+      Authorization: token,
+    },body:JSON.stringify({
+      description,
+      imageUrl
+    })
+  })
+  .then((response)=>{
+    if (response.status === 400){
+      throw new Error('Не удалось добавить пост')
+    }
+    return response.json();
+  })
+
+}
+
 export function getPosts({ token }) {
   return fetch(postsHost, {
     method: "GET",
@@ -23,7 +42,8 @@ export function getPosts({ token }) {
     });
 }
 
-export function registerUser({ login, password, name, imageUrl }) {
+
+export async function registerUser({ login, password, name, imageUrl }) {
   return fetch(baseHost + "/api/user", {
     method: "POST",
     body: JSON.stringify({
