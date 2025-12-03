@@ -87,3 +87,21 @@ export function uploadImage({ file }) {
     return response.json();
   });
 }
+
+export async function getUserPosts({token,id}){
+  try {
+    const response = await fetch(postsHost+'/user-posts/'+id,{
+      method: 'GET',
+      headers:{
+        Authorization: token,
+      } 
+    }) 
+    if (!response.ok){
+      throw new Error('Ошибка запроса')
+    }
+      return await response.json()
+  } catch (error) {
+    console.log(error);
+  }
+}//Сетевой запрос постов пользователя
+
