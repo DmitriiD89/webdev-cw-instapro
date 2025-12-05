@@ -31,7 +31,7 @@ export function renderPostsPageComponent({ appEl }) {
                     </div>
                     <div class="post-likes">
                       <button data-post-id=${post.id} class="like-button">
-                        <img src="${
+                        <img data-post-id=${post.id} src="${
                           post.isLiked
                             ? "./assets/images/like-active.svg"
                             : "./assets/images/like-not-active.svg"
@@ -85,4 +85,19 @@ export function renderPostsPageComponent({ appEl }) {
       });
     });
   }
+  for( let buttonLike of document.querySelectorAll('.like-button')){
+    buttonLike.addEventListener('click',(event)=>{
+      console.log(event.target);
+      
+      const postId = event.target.dataset.postId
+      const post = posts.find((post)=>post.id===postId)
+      const postLikes = event.target.closest('.post-likes')
+      const isLiked = !post.isLiked
+      const likeImageElemnt = postLikes.querySelector('img')
+      likeImageElemnt.src = isLiked? "./assets/images/like-active.svg": "./assets/images/like-not-active.svg";
+
+    })
+  }
 }
+
+

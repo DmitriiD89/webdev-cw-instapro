@@ -89,7 +89,7 @@ export function uploadImage({ file }) {
 }
 
 export async function getUserPosts({token,id}){
-  try {
+  
     const response = await fetch(postsHost+'/user-posts/'+id,{
       method: 'GET',
       headers:{
@@ -100,8 +100,22 @@ export async function getUserPosts({token,id}){
       throw new Error('Ошибка запроса')
     }
       return await response.json()
-  } catch (error) {
+}//Сетевой запрос постов пользователя
+
+export async function setLike({token,id}){
+  try{
+    const response = await fetch (postsHost+`/${id}/like`,{
+  method: 'POST',
+  headers:{
+    Authorization:token,
+  }
+    })
+    if (!response.ok){
+      throw new Error('сетевая ошибка')
+    }
+    return await response.json()
+  } catch (error){
     console.log(error);
   }
-}//Сетевой запрос постов пользователя
+}
 
