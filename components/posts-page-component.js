@@ -1,6 +1,6 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage, getToken } from "../index.js";
+import { posts, goToPage } from "../index.js";
 
 import { formatDistanceToNow } from "https://cdn.skypack.dev/date-fns";
 import { ru } from "https://cdn.skypack.dev/date-fns/locale";
@@ -83,6 +83,8 @@ export function renderPostsPageComponent({ appEl }) {
       });
     });
   }
-  toggleLike()
+  for (let buttonLike of document.querySelectorAll(".like-button")) {
+   toggleLike(buttonLike, posts)
+  }
 }
   

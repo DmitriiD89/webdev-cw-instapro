@@ -17,9 +17,9 @@ export function removeUserFromLocalStorage(user) {
   window.localStorage.removeItem("user");
 };
 
-export function toggleLike(){
-  for (let buttonLike of document.querySelectorAll(".like-button")) {
-    buttonLike.addEventListener("click", async (event) => {
+export function toggleLike(elem, posts){
+  
+    elem.addEventListener("click", async (event) => {
       if (!getUserFromLocalStorage()){
         alert('Сначала авторизуйтесь')
         return
@@ -52,4 +52,4 @@ export function toggleLike(){
       console.log(post.likes, post.isLiked,post);
     });
   }
-}
+

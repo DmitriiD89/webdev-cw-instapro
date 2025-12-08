@@ -5,15 +5,12 @@ import { renderHeaderComponent } from "./header-component.js";
 import { toggleLike } from "../helpers.js";
 
 export function renderUserPostsPageComponent({ appEl }) {
-  let userPosts = posts.posts;
-  
-  console.log(userPosts);
   const appHtml = 
   `
   <div class="page-container">
     <div class="header-container"></div>
     <ul class="posts">
-    ${userPosts.map((post) => (
+    ${posts.map((post) => (
       `<li  class="post">
         <div class="post-header" data-user-id=${post.user.id}>
             <img src='${
@@ -60,7 +57,7 @@ export function renderUserPostsPageComponent({ appEl }) {
       </li>`
     )
   
-    
+
 ).join('')}
     </ul> 
     </div>`
@@ -70,5 +67,7 @@ export function renderUserPostsPageComponent({ appEl }) {
         element: document.querySelector(".header-container"),
       }
     );
-  toggleLike();
+    for (let buttonLike of document.querySelectorAll(".like-button")) {
+  toggleLike(buttonLike, posts);
+    }
 }

@@ -96,7 +96,8 @@ export async function getUserPosts({ token, id }) {
   if (!response.ok) {
     throw new Error("Ошибка запроса");
   }
-  return await response.json();
+  const responsePosts = await response.json();
+  return responsePosts.posts;
 } //Сетевой запрос постов пользователя
 
 export async function setLike({ token, id }) {
