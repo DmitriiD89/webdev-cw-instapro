@@ -1,8 +1,10 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
+import { posts, goToPage, getToken } from "../index.js";
+
 import { formatDistanceToNow } from "https://cdn.skypack.dev/date-fns";
 import { ru } from "https://cdn.skypack.dev/date-fns/locale";
+import { toggleLike } from "../helpers.js";
 
 export function renderPostsPageComponent({ appEl }) {
   // @TODO: реализовать рендер постов из api
@@ -12,14 +14,14 @@ export function renderPostsPageComponent({ appEl }) {
    * @TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
    */
-  const appHtml =
-    
-       `
+  const appHtml = `
               <div class="page-container">
                 <div class="header-container"></div>
                 <ul class="posts">
-                ${posts.map((post) => (
-                  `<li d class="post">
+                ${posts
+                  .map(
+                    (post) =>
+                      `<li d class="post">
                     <div class="post-header" data-user-id=${post.user.id}>
                         <img src='${
                           post.user.imageUrl
@@ -32,10 +34,10 @@ export function renderPostsPageComponent({ appEl }) {
                     <div class="post-likes">
                       <button data-post-id=${post.id} class="like-button">
                         <img data-post-id=${post.id} src="${
-                          post.isLiked
-                            ? "./assets/images/like-active.svg"
-                            : "./assets/images/like-not-active.svg"
-                        }">
+                        post.isLiked
+                          ? "./assets/images/like-active.svg"
+                          : "./assets/images/like-not-active.svg"
+                      }">
                       </button>
                       <p class="post-likes-text">
                         Нравится: <strong>${
@@ -63,14 +65,10 @@ export function renderPostsPageComponent({ appEl }) {
                       })} назад
                     </p>
                   </li>`
-                )
-              
-            ).join('')}
+                  )
+                  .join("")}
                 </ul> 
-                </div>`
-                
-    
-    
+                </div>`;
 
   appEl.innerHTML = appHtml;
 
@@ -85,19 +83,6 @@ export function renderPostsPageComponent({ appEl }) {
       });
     });
   }
-  for( let buttonLike of document.querySelectorAll('.like-button')){
-    buttonLike.addEventListener('click',(event)=>{
-      console.log(event.target);
-      
-      const postId = event.target.dataset.postId
-      const post = posts.find((post)=>post.id===postId)
-      const postLikes = event.target.closest('.post-likes')
-      const isLiked = !post.isLiked
-      const likeImageElemnt = postLikes.querySelector('img')
-      likeImageElemnt.src = isLiked? "./assets/images/like-active.svg": "./assets/images/like-not-active.svg";
-
-    })
-  }
+  toggleLike()
 }
-
-
+  

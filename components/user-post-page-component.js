@@ -2,6 +2,7 @@ import { posts } from "../index.js";
 import { formatDistanceToNow } from "https://cdn.skypack.dev/date-fns";
 import { ru } from "https://cdn.skypack.dev/date-fns/locale";
 import { renderHeaderComponent } from "./header-component.js";
+import { toggleLike } from "../helpers.js";
 
 export function renderUserPostsPageComponent({ appEl }) {
   let userPosts = posts.posts;
@@ -25,7 +26,7 @@ export function renderUserPostsPageComponent({ appEl }) {
         </div>
         <div class="post-likes">
           <button data-post-id=${post.id} class="like-button">
-            <img src="${
+            <img data-post-id=${post.id} src="${
               post.isLiked
                 ? "./assets/images/like-active.svg"
                 : "./assets/images/like-not-active.svg"
@@ -59,12 +60,15 @@ export function renderUserPostsPageComponent({ appEl }) {
       </li>`
     )
   
+    
 ).join('')}
     </ul> 
     </div>`
-  
+    
     appEl.innerHTML = appHtml;
      renderHeaderComponent({
         element: document.querySelector(".header-container"),
-      });
+      }
+    );
+  toggleLike();
 }
