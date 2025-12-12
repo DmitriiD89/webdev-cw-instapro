@@ -117,7 +117,8 @@ export function renderAuthPageComponent({ appEl, setUser }) {
 
         loginUser({ login, password })
           .then((user) => {
-            setUser(user.user);
+            setUser({token: user.user.token, imageUrl: user.user.imageUrl});
+
           })
           .catch((error) => {
             console.warn(error);
@@ -151,7 +152,7 @@ export function renderAuthPageComponent({ appEl, setUser }) {
 
         registerUser({ login, password, name, imageUrl })
           .then((user) => {
-            setUser(user.user);
+            setUser({token: user.user.token, imageUrl: user.user.imageUrl});
           })
           .catch((error) => {
             console.warn(error);

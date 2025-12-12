@@ -1,5 +1,5 @@
 import { setLike, unsetLike } from "../api.js";
-import { posts, getToken } from "../index.js";
+import { getToken } from "../index.js";
 
 export function saveUserToLocalStorage(user) {
   window.localStorage.setItem("user", JSON.stringify(user));
